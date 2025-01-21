@@ -12,7 +12,7 @@ Player::Player() {
 
 void Player::playBase(Shoe* shoe) {
 
-	cout << *name << "のターン" << endl;
+	cout << "===================="<< endl << *name << "のターン" << endl;
 	showHand();
 	//standするまでループ処理
 	while (true) {

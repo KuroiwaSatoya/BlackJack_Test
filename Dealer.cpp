@@ -11,7 +11,7 @@ Dealer::Dealer() {
 
 //ゲーム実行
 void Dealer::playBase(Shoe* shoe) {
-	cout << *name << "のターン" << endl;
+	cout << "====================" << endl << *name << "のターン" << endl;
 	//スコアが16以下の場合hitを続ける
 	while (getScore() < 17 && getScore() > 0) {
 		//ヒットする

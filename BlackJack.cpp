@@ -70,6 +70,7 @@ int main() {
 		persons[i]->hit(&shoe);
 		showHand(persons[i]);
 	}
+	cout << "====================" << endl;
 	//プレイヤーに2枚目を配布
 	for (int i = 0; i < num - 1; i++) {
 		persons[i]->hit(&shoe);
@@ -87,7 +88,6 @@ int main() {
 	persons[DEALER]->playBase(&shoe);
 
 	for (int i = 0; i < num - 1; i++) {
-		showHand(persons[i]);
 		//バーストしているかどうか判別
 		if (persons[i]->play(&shoe)) {
 			//バーストせずstandした

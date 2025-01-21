@@ -123,7 +123,7 @@ void Person::showHand() {
 // ƒ^[ƒ“ˆ—
 bool Person::play(Shoe* shoe)
 {
-	playBase(shoe);
+	//playBase(shoe);
 
 	if (getScore() <= 0) return false;
 	return true;

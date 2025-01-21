@@ -7,7 +7,7 @@ class Shoe {
 
 private:
 	//基本的にカードシューはprivate
-	int _cardShoe[NUM]; //カード配列
+	int _cardShoe[CARD]; //カード配列
 	int _cardNum; //カード枚数
 
 	void _shuffle();

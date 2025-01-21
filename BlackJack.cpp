@@ -12,23 +12,23 @@ using namespace std;
 //
 
 // ★★★★★★★★★★★★★★★★
-static void showResult(Person** p)
+static void showResult(Person** p, int i)
 {
 	cout << "============================" << endl;
 	cout << "            result          " << endl;
 	cout << "============================" << endl;
 	cout << "============================" << endl;
 	cout << "player" << endl;
-	p[0]->showHand();
+	p[i]->showHand();
 	cout << "============================" << endl;
 	cout << "dealer" << endl;
-	p[1]->showHand();
+	p[3]->showHand();
 	cout << "============================" << endl;
 
-	if (p[0]->getScore() > p[1]->getScore()) {
+	if (p[i]->getScore() > p[3]->getScore()) {
 		cout << "Player Win!" << endl;
 	}
-	else if (p[0]->getScore() < p[1]->getScore()) {
+	else if (p[i]->getScore() < p[3]->getScore()) {
 		cout << "Player Lose" << endl;
 	}
 	else {
@@ -36,11 +36,12 @@ static void showResult(Person** p)
 	}
 }
 
-static void showHand(Person* p, const char* name = "player")
+static void showHand(Person* p)
 {
 	//手札の表示
 	cout << "====================" << endl;
-	cout << name << endl;
+	p->printName();
+	cout << endl;
 	p->showHand();
 	cout << "====================" << endl;
 
@@ -48,53 +49,62 @@ static void showHand(Person* p, const char* name = "player")
 
 //メイン関数
 int main() {
-
+	// 確認
 	srand((unsigned int)time(NULL));
 
 	enum PERSON
 	{
-		PLAYER, DEALER
+		PLAYER1, PLAYER2, PLAYER3, DEALER
 	};
 
 	//各オブジェクトの生成
 	Shoe shoe;
-	Person* persons[] = { new Player, new Dealer};
-	const char* name[] = {"player", "dealer"};
+	Person* persons[] = { new Player, new Player, new Player, new Dealer};
+	//const char* name[] = {"player", "dealer"};
 	const int num = sizeof(persons) / sizeof(Person*);
 
 	//----カードの配布 ... 初期
 	cout << "====================" << endl;
 	for (int i = 0; i < num; i++)
 	{
-		persons[i]->hit(shoe);
-		showHand(persons[i], name[i]);
+		persons[i]->hit(&shoe);
+		showHand(persons[i]);
 	}
 	//プレイヤーに2枚目を配布
-	persons[PLAYER]->hit(shoe);
-	showHand(persons[PLAYER]);
+	for (int i = 0; i < num - 1; i++) {
+		persons[i]->hit(&shoe);
+		showHand(persons[i]);
+	}
 
 	//ディーラーに2枚目を配布
-	persons[DEALER]->hit(shoe);
+	persons[DEALER]->hit(&shoe);
 
 
 	// ----　勝負開始
-	//プレイヤーの実行
-	//バーストしているかどうか判別
-	if (persons[PLAYER]->play(&shoe)) {
-		//バーストせずstandした
-
-		//ディーラーの手札を表示
-		showHand(persons[DEALER], "dealer");
-
-		//ディーラーの自動実行
-		persons[DEALER]->play(&shoe);
-
-		//結果の表示
-		showResult(persons);
+	for (int i = 0; i < num - 1; i++) {
+		persons[i]->playBase(&shoe);
 	}
-	else {
-		cout << "Burst Player Lose" << endl;
+	persons[DEALER]->playBase(&shoe);
+
+	for (int i = 0; i < num - 1; i++) {
+		showHand(persons[i]);
+		//バーストしているかどうか判別
+		if (persons[i]->play(&shoe)) {
+			//バーストせずstandした
+
+			//ディーラーの手札を表示
+			showHand(persons[DEALER]);
+
+			//ディーラーの自動実行
+			persons[DEALER]->play(&shoe);
+
+			//結果の表示
+			showResult(persons, i);
+		}
+		else {
+			cout << "Burst Player Lose" << endl;
+		}
+		cout << "====================" << endl;
 	}
-	cout << "====================" << endl;
 	return 0;
 }

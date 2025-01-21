@@ -5,8 +5,11 @@
 //プレイヤークラス
 class Player : public Person
 {
-protected:
+private:
+	const char* name[];
+public:
+	Player();
 	//ゲーム実行
 	void playBase(Shoe* shoe);
-
+	void printName();
 };

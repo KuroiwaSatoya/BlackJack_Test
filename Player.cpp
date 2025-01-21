@@ -5,9 +5,17 @@
 using namespace std;
 
 //ゲーム実行
+
+Player::Player() {
+	*name = "player";
+}
+
 void Player::playBase(Shoe* shoe) {
-	//バーストするまでループ処理
-	while (getScore()) {
+
+	cout << *name << "のターン" << endl;
+	showHand();
+	//standするまでループ処理
+	while (true) {
 		cout << "hit or stand >> ";
 
 		//入力
@@ -16,11 +24,11 @@ void Player::playBase(Shoe* shoe) {
 		//hitが入力された場合
 		if (strcmp(str, "hit") == 0) {
 			//カードの配布
-			hit(*shoe);
+			hit(shoe);
 
 			//手札の表示
 			cout << "====================" << endl;
-			cout << "player" << endl;
+			cout << *name << endl;
 			showHand();
 			cout << "====================" << endl;
 		}
@@ -29,4 +37,8 @@ void Player::playBase(Shoe* shoe) {
 			break;
 		}
 	}
+}
+
+void Player::printName() {
+	cout << *name;
 }

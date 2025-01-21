@@ -5,8 +5,11 @@
 //ディーラークラス
 class Dealer : public Person 
 {
-protected:
+private:
+	const char* name[];
+public:
+	Dealer();
 	//ゲーム実行
 	void playBase(Shoe* shoe);
-
+	void printName();
 };

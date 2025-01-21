@@ -7,9 +7,9 @@ using namespace std;
 //シャッフル（フィッシャーイェーツ）
 void Shoe::_shuffle()
 {
-	for (int i = _cardNum; i > 1; --i) {
-		int a = i - 1;
-		int b = rand() % i;
+	for (int i = _cardNum - 1; i > 0; --i) {
+		int a = i;
+		int b = rand() % (i + 1);
 		swap(_cardShoe[a], _cardShoe[b]);
 	}
 }
@@ -18,10 +18,10 @@ void Shoe::_shuffle()
 Shoe::Shoe() {
 
 	//カードを入れてく0.... /13でカード種類とする
-	for (int i = 0; i < NUM; i++) {
+	for (int i = 0; i < CARD; i++) {
 		_cardShoe[i] = i;
 	}
-	_cardNum = NUM; //カード枚数の設定
+	_cardNum = CARD; //カード枚数の設定
 
 	//シャッフル
 	_shuffle();
@@ -44,14 +44,13 @@ void Shoe::showShoe(SHOW_TYPE type) const
 
 //カードを1枚取り出す
 int Shoe::takeCard() {
-	//カード枚数が0以下だった場合,エラーとして出力
+	//カード枚数が0以下だった場合,無限に引けるようにするためにNUMを代入してシャッフル
 	if (_cardNum <= 0) {
-		//標準出力
-		cout << "シューにカードがありません。" << endl;
-		return -1;
+		_cardNum = CARD;
+		_shuffle();
 	}
 
-	int card = _cardShoe[_cardNum];
+	int card = _cardShoe[--_cardNum];
 
 	return card;
 }
